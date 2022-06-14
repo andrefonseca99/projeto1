@@ -1,23 +1,34 @@
 <div class="sneakers sneakers-list-item">
     <div class="sneakers-list-cover">
+        <a href="{% url 'sneakers:sneaker' sneaker.id %}">
         <img src="{{ sneaker.cover.url }}" alt="Temporary image">
+        </a>
     </div>
 
     <div class="sneaker-title-container">
-        <h2 class="sneaker-title">{{ sneaker.title }}</h2>
+        <h2 class="sneaker-title">
+            <a href="{% url 'sneakers:sneaker' sneaker.id %}">
+        {{ sneaker.title }}
+            </a>
+        </h2>
     </div>
 
     <div class="sneaker-author">
         <span class="sneaker-author-item">
             <i class="fas fa-user"></i>
-            {{ sneaker.author.first_name }} {{ sneaker.author.last_name }}
+
+            {% if sneaker.author.first_name %}
+                {{ sneaker.author.first_name }} {{ sneaker.author.last_name }}
+            {% else %}
+                {{ sneaker.author.username }}
+            {% endif %}
         </span>
         <span class="sneaker-author-item">
             <i class="fas fa-calendar-alt"></i>
             {{ sneaker.created_at|date:"d/m/Y" }} às {{ sneaker.created_at|date:"H:i" }}
         </span>
         <span class="sneaker-author-item">
-            <a href="/sneakers/category/sneaker/">
+            <a href="{% url 'sneakers:category' sneaker.category.id %}">
                 <i class="fas fa-layer-group"></i>
                 <span>{{ sneaker.category.name }}</span>
             </a>
@@ -45,7 +56,7 @@
 
     {% if is_detail_page is not True %}
     <footer class="sneaker-footer">
-        <a class="sneaker-read-more button button-dark button-full-width" href="/sneakers/3/">
+        <a class="sneaker-read-more button button-dark button-full-width" href="{% url 'sneakers:sneaker' sneaker.id %}">
             <i class="fas fa-eye"></i>
             <span>Ver mais..</span>
         </a>
