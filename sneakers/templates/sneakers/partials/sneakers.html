@@ -14,15 +14,17 @@
     </div>
 
     <div class="sneaker-author">
-        <span class="sneaker-author-item">
-            <i class="fas fa-user"></i>
+        {% if sneaker.author is not None %}
+            <span class="sneaker-author-item">
+                <i class="fas fa-user"></i>
+                {% if sneaker.author.first_name %}
+                    {{ sneaker.author.first_name }} {{ sneaker.author.last_name }}
+                {% else %}
+                    {{ sneaker.author.username }}
+                {% endif %}            
+            </span>
+        {% endif %}
 
-            {% if sneaker.author.first_name %}
-                {{ sneaker.author.first_name }} {{ sneaker.author.last_name }}
-            {% else %}
-                {{ sneaker.author.username }}
-            {% endif %}
-        </span>
         <span class="sneaker-author-item">
             <i class="fas fa-calendar-alt"></i>
             {{ sneaker.created_at|date:"d/m/Y" }} às {{ sneaker.created_at|date:"H:i" }}
