@@ -67,7 +67,11 @@
 
     {% if is_detail_page is True %}
         <div class="preparation-steps">
-            {{ sneaker.sneaker_description|linebreaksbr }}
+            {%if sneaker.sneaker_description_is_html is True %}
+                {{ sneaker.sneaker_description|safe }}
+            {% else %}
+                {{ sneaker.sneaker_description|linebreaksbr }}
+            {% endif %}
         </div>
     {% endif %}
 </div>

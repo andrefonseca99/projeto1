@@ -1,31 +1,33 @@
-from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 from utils.sneakers.factory import make_sneaker
 
 from sneakers.models import Sneaker
 
 
 def home(request):
-    sneakers = Sneaker.objects.filter(is_published=True).order_by('-id')
+    sneakers = Sneaker.objects.filter(
+        is_published=True,
+    ).order_by('-id')
+
     return render(request, 'sneakers/pages/home.html', context={
         'sneakers': sneakers,
     })
 
-
-
 def category(request, category_id):
-    sneakers = Sneaker.objects.filter(category__id=category_id, is_published=True).order_by('-id')
-
-    if not sneakers:
-        raise Http404('Not found')
+    sneakers = get_list_or_404(Sneaker.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id'))
 
     return render(request, 'sneakers/pages/category.html', context={
         'sneakers': sneakers,
-        'title': f'{sneakers.first().category.name} - Category |'
+        'title': f'{sneakers[0].category.name} - Category |'
     })
 
 def sneaker(request, id):
+    sneaker = get_object_or_404(Sneaker, pk=id, is_published=True,)
+
     return render(request, 'sneakers/pages/sneaker-view.html', context={
-        'sneaker': make_sneaker(),
+        'sneaker': sneaker,
         'is_detail_page': True,
     })
