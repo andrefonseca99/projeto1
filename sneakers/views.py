@@ -1,7 +1,8 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render
-from utils.sneakers.factory import make_sneaker
 
 from sneakers.models import Sneaker
+
+# from utils.sneakers.factory import make_sneaker
 
 
 def home(request):
@@ -13,6 +14,7 @@ def home(request):
         'sneakers': sneakers,
     })
 
+
 def category(request, category_id):
     sneakers = get_list_or_404(Sneaker.objects.filter(
         category__id=category_id,
@@ -23,6 +25,7 @@ def category(request, category_id):
         'sneakers': sneakers,
         'title': f'{sneakers[0].category.name} - Category |'
     })
+
 
 def sneaker(request, id):
     sneaker = get_object_or_404(Sneaker, pk=id, is_published=True,)
