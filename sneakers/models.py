@@ -23,9 +23,8 @@ class Sneaker(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(upload_to='sneakers/covers/%Y/%m/%d/')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)  # noqa: E501
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-   
 
     def __str__(self):
         return self.title
