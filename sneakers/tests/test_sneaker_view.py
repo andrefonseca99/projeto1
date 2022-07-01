@@ -37,7 +37,7 @@ class SneakerViewsTest(SneakerTestBase):
         self.make_sneaker(is_published=False)
         response = self.client.get(reverse('sneakers:home'))
         # Check if the sneaker will be found
-        self.assertIn('No sneakers found ', response.content.decode('utf-8'))
+        self.assertIn('No sneakers found', response.content.decode('utf-8'))
 
     def test_sneaker_category_view_function_is_correct(self):
         view = resolve(reverse('sneakers:category', kwargs={'category_id': 1000}))  # noqa: E501
@@ -56,6 +56,13 @@ class SneakerViewsTest(SneakerTestBase):
         # Check if one sneaker exists
         self.assertIn(needed_title, content)
 
+    def test_sneaker_category_template_dont_load_sneakers_not_published(self):
+        # We need a sneaker for this test
+        sneaker = self.make_sneaker(is_published=False)
+        response = self.client.get(reverse('sneakers:category', kwargs={'category_id': sneaker.category.id}))  # noqa: E501
+        # Check if the sneaker will be found
+        self.assertEqual(response.status_code, 404)
+
     def test_sneaker_detail_view_function_is_correct(self):
         view = resolve(reverse('sneakers:sneaker', kwargs={'id': 1000}))
         self.assertIs(view.func, views.sneaker)
@@ -72,3 +79,10 @@ class SneakerViewsTest(SneakerTestBase):
         content = response.content.decode('utf-8')
         # Check if one sneaker exists
         self.assertIn(needed_title, content)
+
+    def test_sneaker_detail_template_dont_load_sneaker_not_published(self):
+        # We need a sneaker for this test
+        sneaker = self.make_sneaker(is_published=False)
+        response = self.client.get(reverse('sneakers:sneaker', kwargs={'id': sneaker.id}))  # noqa: E501
+        # Check if the sneaker will be found
+        self.assertEqual(response.status_code, 404)
