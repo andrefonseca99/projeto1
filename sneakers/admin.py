@@ -8,12 +8,12 @@ from .models import Category, Sneaker
 class CategoryAdmin(admin.ModelAdmin):
     ...
 
+
 @admin.register(Sneaker)
+
+
 class SneakerAdmin(admin.ModelAdmin):
     ...
 
 
-
 admin.site.register(Category, CategoryAdmin)
-
-

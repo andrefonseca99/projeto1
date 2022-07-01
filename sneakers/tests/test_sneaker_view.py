@@ -32,6 +32,13 @@ class SneakerViewsTest(SneakerTestBase):
         self.assertIn('Sneaker Title', content)
         self.assertEqual(len(response_context_sneakers), 1)
 
+    def test_sneaker_home_template_dont_load_sneakers_not_published(self):
+        # We need a sneaker for this test
+        self.make_sneaker(is_published=False)
+        response = self.client.get(reverse('sneakers:home'))
+        # Check if the sneaker will be found
+        self.assertIn('No sneakers found ', response.content.decode('utf-8'))
+
     def test_sneaker_category_view_function_is_correct(self):
         view = resolve(reverse('sneakers:category', kwargs={'category_id': 1000}))  # noqa: E501
         self.assertIs(view.func, views.category)
