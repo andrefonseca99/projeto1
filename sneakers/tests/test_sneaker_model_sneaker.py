@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from parameterized import parameterized
 
 from .test_sneaker_base import SneakerTestBase
 
@@ -9,7 +10,13 @@ class SneakerModelTest(SneakerTestBase):
         self.sneaker = self.make_sneaker()
         return super().setUp()
 
-    def test_sneaker_title_raises_error_if_title_is_longer_than_65_chars(self):
-        self.sneaker.title = 'A' * 70
+    @parameterized.expand([
+            ('title', 65),
+            ('description', 165),
+            ('condition_unit', 65),
+            ('price_unit', 65),
+        ])
+    def test_sneaker_fields_max_length(self, field, max_length):
+        setattr(self.sneaker, field, 'A' * (max_length + 1))
         with self.assertRaises(ValidationError):
             self.sneaker.full_clean()
