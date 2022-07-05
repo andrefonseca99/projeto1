@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from parameterized import parameterized
 
-from .test_sneaker_base import Sneaker, SneakerTestBase
+from .test_sneaker_base import Category, Sneaker, SneakerTestBase
 
 
 class SneakerModelTest(SneakerTestBase):
@@ -46,3 +46,11 @@ class SneakerModelTest(SneakerTestBase):
     def test_sneaker_is_published_is_false_by_default(self):
         sneaker = self.make_sneaker_no_defaults()
         self.assertFalse(sneaker.is_published)
+
+    def test_sneaker_string_representation(self):
+        needed = 'Testing Representation'
+        self.sneaker.title = needed
+        self.sneaker.full_clean()
+        self.sneaker.save()
+        str(self.sneaker)
+        self.assertEqual(str(self.sneaker), needed)
