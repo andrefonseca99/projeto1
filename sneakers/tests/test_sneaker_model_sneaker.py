@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from parameterized import parameterized
 
-from .test_sneaker_base import Category, Sneaker, SneakerTestBase
+from .test_sneaker_base import Sneaker, SneakerTestBase
 
 
 class SneakerModelTest(SneakerTestBase):
