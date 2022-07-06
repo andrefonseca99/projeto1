@@ -12,7 +12,7 @@ class Category(models.Model):
 class Sneaker(models.Model):
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=165)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     condition_value = models.IntegerField()
     condition_unit = models.CharField(max_length=65)
     price = models.IntegerField()

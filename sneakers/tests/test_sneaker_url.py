@@ -15,3 +15,7 @@ class SneakerURLsTest(TestCase):
     def test_sneakers_sneakers_url_is_correct(self):
         url = reverse('sneakers:sneaker', kwargs={'id': 1})
         self.assertEqual(url, '/sneakers/1/')
+
+    def test_sneakers_search_url_is_correct(self):
+        url = reverse('sneakers:search')
+        self.assertEqual(url, '/sneakers/search/')
