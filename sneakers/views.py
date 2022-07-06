@@ -34,3 +34,7 @@ def sneaker(request, id):
         'sneaker': sneaker,
         'is_detail_page': True,
     })
+
+
+def search(request):
+    return render(request, 'sneakers/pages/search.html')

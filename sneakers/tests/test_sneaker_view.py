@@ -86,3 +86,11 @@ class SneakerViewsTest(SneakerTestBase):
         response = self.client.get(reverse('sneakers:sneaker', kwargs={'id': sneaker.id}))  # noqa: E501
         # Check if the sneaker will be found
         self.assertEqual(response.status_code, 404)
+
+    def test_sneaker_search_view_function_is_correct(self):
+        view = resolve(reverse('sneakers:search'))
+        self.assertIs(view.func, views.search)
+
+    def test_sneaker_search_loads_correct_template(self):
+        response = self.client.get(reverse('sneakers:search'))
+        self.assertTemplateUsed(response, 'sneakers/pages/search.html')
