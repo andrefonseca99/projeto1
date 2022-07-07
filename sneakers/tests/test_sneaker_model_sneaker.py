@@ -16,7 +16,7 @@ class SneakerModelTest(SneakerTestBase):
             author=self.make_author(username='newuser'),
             title='Sneaker Title',
             description='Sneaker Description',
-            slug='sneaker-slug',
+            slug='sneaker-slug-for-no-defaults',
             condition_value=10,
             condition_unit='/10',
             price=100,
