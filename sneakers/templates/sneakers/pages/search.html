@@ -1,0 +1,15 @@
+{% extends 'global/base.html' %}
+
+{% block title %}{{ page_title }}{% endblock title %}
+
+{% block content %}
+<div class="main-content main-content-list container">
+    {% for sneaker in sneakers %}
+        {% include 'sneakers/partials/sneakers.html' %}
+    {% empty %}
+        <div class="center m-y">
+            <h1>No sneakers found</h1>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
