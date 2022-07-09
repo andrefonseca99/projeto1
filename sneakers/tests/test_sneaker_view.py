@@ -98,3 +98,7 @@ class SneakerViewsTest(SneakerTestBase):
     def test_sneaker_search_raises_404_if_no_search_term(self):
         response = self.client.get(reverse('sneakers:search'))
         self.assertEqual(response.status_code, 404)
+
+    def test_sneaker_search_term_is_on_title_and_escaped(self):
+        response = self.client.get(reverse('sneakers:search') + '?q=Teste')
+        self.assertIn('Search for &quot;Teste &quot;| Sneakers', response.content.decode('utf-8'))  # noqa: E501
