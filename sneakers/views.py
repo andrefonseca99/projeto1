@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 
@@ -39,11 +40,17 @@ def sneaker(request, id):
 
 def search(request):
     # Checking if we have anything in the search form
-    search_term = request.GET.get('q', '').strip()  # Returns None if we dont have 'q'
+    search_term = request.GET.get('q', '').strip()  # Can return None
     if not search_term:
         raise Http404()
+
+    sneakers = Sneaker.objects.filter(
+        Q(title__icontains=search_term) |
+        Q(description__icontains=search_term),
+    ).order_by('-id')
 
     return render(request, 'sneakers/pages/search.html', {
         'page_title': f'Search for "{search_term} "|',
         'search_term': search_term,
+        'sneakers': sneakers,
     })
