@@ -1,6 +1,18 @@
+import math
+
+
 def make_pagination_range(
-            page_range=list(range(1, 21)),
-            page_qty=4,
-            current_page=1
+            page_range,
+            page_qty,
+            current_page,
 ):
-    return [1, 2, 3, 4]
+    middle_range = math.ceil(page_qty / 2)
+    start_range = current_page - middle_range
+    stop_range = current_page + middle_range
+
+    start_range_offset = abs(start_range) if start_range < 0 else 0
+
+    if start_range < 0:
+        start_range = 0
+        stop_range += start_range_offset
+    return page_range[start_range:stop_range]
