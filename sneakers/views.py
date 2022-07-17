@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
@@ -12,8 +13,12 @@ def home(request):
         is_published=True,
     ).order_by('-id')
 
+    current_page = request.GET.get('page', 1)
+    paginator = Paginator(sneakers, 12)
+    page_obj = paginator.get_page(current_page)
+
     return render(request, 'sneakers/pages/home.html', context={
-        'sneakers': sneakers,
+        'sneakers': page_obj,
     })
 
 
