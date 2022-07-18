@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
+from utils.pagination import make_pagination_range
 
 from sneakers.models import Sneaker
 
@@ -13,12 +14,23 @@ def home(request):
         is_published=True,
     ).order_by('-id')
 
-    current_page = request.GET.get('page', 1)
+    try:
+        current_page = int(request.GET.get('page', 1))
+    except ValueError:
+        current_page = 1
+
     paginator = Paginator(sneakers, 12)
     page_obj = paginator.get_page(current_page)
 
+    pagination_range = make_pagination_range(
+        paginator.page_range,
+        4,
+        current_page
+    )
+
     return render(request, 'sneakers/pages/home.html', context={
         'sneakers': page_obj,
+        'pagination_range': pagination_range,
     })
 
 
