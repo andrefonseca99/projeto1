@@ -1,3 +1,5 @@
+import os
+
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
@@ -5,7 +7,7 @@ from utils.pagination import make_pagination
 
 from sneakers.models import Sneaker
 
-# from utils.sneakers.factory import make_sneaker
+PER_PAGE = int(os.environ.get('PER_PAGE', 12))
 
 
 def home(request):
@@ -13,7 +15,7 @@ def home(request):
         is_published=True,
     ).order_by('-id')
 
-    page_obj, pagination_range = make_pagination(request, sneakers, 12)
+    page_obj, pagination_range = make_pagination(request, sneakers, PER_PAGE)
 
     return render(request, 'sneakers/pages/home.html', context={
         'sneakers': page_obj,
@@ -27,7 +29,7 @@ def category(request, category_id):
         is_published=True,
     ).order_by('-id'))
 
-    page_obj, pagination_range = make_pagination(request, sneakers, 12)
+    page_obj, pagination_range = make_pagination(request, sneakers, PER_PAGE)
 
     return render(request, 'sneakers/pages/category.html', context={
         'sneakers': page_obj,
@@ -59,7 +61,7 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
-    page_obj, pagination_range = make_pagination(request, sneakers, 12)
+    page_obj, pagination_range = make_pagination(request, sneakers, PER_PAGE)
 
     return render(request, 'sneakers/pages/search.html', {
         'page_title': f'Search for "{search_term} "|',
