@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.urls import resolve, reverse
 from sneakers import views
 
@@ -38,3 +40,19 @@ class SneakerHomeViewTest(SneakerTestBase):
         response = self.client.get(reverse('sneakers:home'))
         # Check if the sneaker will be found
         self.assertIn('No sneakers found', response.content.decode('utf-8'))
+
+    def test_sneaker_home_is_paginated(self):
+
+        for i in range(8):
+            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
+            self.make_sneaker(**kwargs)
+
+        with patch('sneakers.views.PER_PAGE', new=3):
+            response = self.client.get(reverse('sneakers:home'))
+            sneakers = response.context['sneakers']
+            paginator = sneakers.paginator
+
+            self.assertEqual(paginator.num_pages, 3)
+            self.assertEqual(len(paginator.get_page(1)), 3)
+            self.assertEqual(len(paginator.get_page(2)), 3)
+            self.assertEqual(len(paginator.get_page(3)), 2)
