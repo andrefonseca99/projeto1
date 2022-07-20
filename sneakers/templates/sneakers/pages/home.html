@@ -3,6 +3,9 @@
 {% block title %}Home |{% endblock title %}
 
 {% block content %}
+
+{% include 'sneakers/partials/messages.html' %}
+
 <div class="main-content main-content-list container">
     {% for sneaker in sneakers %}
         {% include 'sneakers/partials/sneakers.html' %}
