@@ -319,7 +319,17 @@ h6 {
 .pagination .page-current {
     background: var(--color-primary-dark);
 }
+
+/* Forms */
+
+
+
+
+
+
+
 /* Messages */
+
 .messages-container {
     display: flex;
     flex-flow: column nowrap;

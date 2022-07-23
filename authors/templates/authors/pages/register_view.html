@@ -7,7 +7,7 @@
         <h2>Register</h2>
     </div>
     <div class="main-content container">
-        <form action="" method="POST">
+        <form action="{% url 'authors:create' %}" method="POST">
             {% csrf_token %}
             <div class="form-content form-content-grid">
                 {% for field in form %}
