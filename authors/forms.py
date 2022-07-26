@@ -41,12 +41,18 @@ class RegisterForm(forms.ModelForm):
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(),
-        validators=[strong_password]
+        help_text=(
+            'At leats 8 characters. Needs to contain an uppercase letter, '
+            'a lowercase letter and a number'
+        ),
+        validators=[strong_password],
+        label='Password'
     )
 
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(),
+        label='Password check'
     )
 
     class Meta:
@@ -64,11 +70,9 @@ class RegisterForm(forms.ModelForm):
             'last_name': 'Last name',
             'username': 'Username',
             'email': 'E-mail',
-            'password': 'Password',
         }
         help_texts = {
-            'password': None,
-            'username': None,
+            'username': 'Can only contain letters, numbers and @/./+/-/_',
         }
         error_messages = {
             'username': {
