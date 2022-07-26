@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -10,6 +12,19 @@ def add_attr(field, attr_name, attr_new_val):
 
 def add_placeholder(field, placeholder_val):
     add_attr(field, 'placeholder', placeholder_val)
+
+
+def strong_password(password):
+    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+
+    if not regex.match(password):
+        raise ValidationError((
+            'Password must have at least one uppercase letter, '
+            'one lowercase letter and one number. The lenght should be '
+            'at least 8 characters.'
+        ),
+            code='Invalid'
+        )
 
 
 class RegisterForm(forms.ModelForm):
@@ -26,7 +41,9 @@ class RegisterForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Your password',
         }),
+        validators=[strong_password]
     )
+
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -61,24 +78,11 @@ class RegisterForm(forms.ModelForm):
                 'max_lenght': 'This field must have less than 3 charcters',
             }
         }
-        widgets = {
-            'first_name': forms.TextInput(attrs={
-                'placeholder': 'Type your first name here',
-                # 'class': 'input text_input',
-            }),
-            'last_name': forms.TextInput(attrs={
-                'placeholder': 'Type your last name here',
-            }),
-            'username': forms.TextInput(attrs={
-                'placeholder': 'Type your username here',
-            }),
-            'email': forms.TextInput(attrs={
-                'placeholder': 'Type your e-mail here',
-            }),
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'Type your password here',
-            }),
-        }
+        # widgets = {
+        #     'password': forms.PasswordInput(attrs={
+        #         'placeholder': 'Type your password here',
+        #     }),
+        # }
 
     def clean(self):
         cleaned_data = super().clean()
