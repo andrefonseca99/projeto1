@@ -35,20 +35,18 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Your e-mail')
         add_placeholder(self.fields['first_name'], 'Your first name')
         add_placeholder(self.fields['last_name'], 'Your last name')
+        add_placeholder(self.fields['password'], 'Your password')
+        add_placeholder(self.fields['password2'], 'Repeat your password')
 
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Your password',
-        }),
+        widget=forms.PasswordInput(),
         validators=[strong_password]
     )
 
     password2 = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Repeat your password here',
-        }),
+        widget=forms.PasswordInput(),
     )
 
     class Meta:
@@ -78,11 +76,6 @@ class RegisterForm(forms.ModelForm):
                 'max_lenght': 'This field must have less than 3 charcters',
             }
         }
-        # widgets = {
-        #     'password': forms.PasswordInput(attrs={
-        #         'placeholder': 'Type your password here',
-        #     }),
-        # }
 
     def clean(self):
         cleaned_data = super().clean()
