@@ -6,6 +6,9 @@
     <div class="main-content center container">
         <h2>Register</h2>
     </div>
+
+    {% include 'sneakers/partials/messages.html' %}
+
     <div class="main-content container">
         <form action="{% url 'authors:create' %}" method="POST">
             {% csrf_token %}
@@ -23,6 +26,7 @@
                     </div>
                 {% endfor %}
             </div>
+
             {% if form.errors %}
             <div class="form-content form-content-grid">
                 <div class="form-group">
