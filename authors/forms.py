@@ -38,21 +38,36 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password'], 'Your password')
         add_placeholder(self.fields['password2'], 'Repeat your password')
 
+    first_name = forms.CharField(
+        error_messages={'required': 'Write your first name'},
+        label='First name',
+    )
+
+    last_name = forms.CharField(
+        error_messages={'required': 'Write your last name'},
+        label='Last name',
+    )
+
+    email = forms.EmailField(
+        error_messages={'required': 'E-mail is required'},
+        label='E-mail',
+    )
+
     password = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
         help_text=(
             'At leats 8 characters. Needs to contain an uppercase letter, '
             'a lowercase letter and a number'
         ),
         validators=[strong_password],
-        label='Password'
+        label='Password',
+        error_messages={'required': 'Password must not be empty'},
     )
 
     password2 = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
-        label='Password check'
+        label='Password check',
+        error_messages={'required': 'Please repeat your password'},
     )
 
     class Meta:
@@ -66,10 +81,7 @@ class RegisterForm(forms.ModelForm):
         ]
         # exclude = ['last_name']
         labels = {
-            'first_name': 'First name',
-            'last_name': 'Last name',
             'username': 'Username',
-            'email': 'E-mail',
         }
         help_texts = {
             'username': 'Can only contain letters, numbers and @/./+/-/_',
