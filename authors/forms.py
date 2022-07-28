@@ -101,7 +101,7 @@ class RegisterForm(forms.ModelForm):
 
         if password != password2:
             raise ValidationError({
-                'password': 'Password and password2 must be equal',
-                'password2': 'Password and password2 must be equal',
+                'password': 'Passwords must be equal',
+                'password2': 'Passwords must be equal',
             }
             )
