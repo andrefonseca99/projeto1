@@ -25,7 +25,7 @@ class SneakerHomeViewTest(SneakerTestBase):
         self.assertIn('No sneakers found', response.content.decode('utf-8'))
 
     def test_sneaker_home_template_loads_sneakers(self):
-        # We need a sneaker for this test
+        # Sneaker needed for this test
         self.make_sneaker()
         response = self.client.get(reverse('sneakers:home'))
         content = response.content.decode('utf-8')
@@ -35,7 +35,7 @@ class SneakerHomeViewTest(SneakerTestBase):
         self.assertEqual(len(response_context_sneakers), 1)
 
     def test_sneaker_home_template_dont_load_sneakers_not_published(self):
-        # We need a sneaker for this test
+        # Sneaker needed for this test
         self.make_sneaker(is_published=False)
         response = self.client.get(reverse('sneakers:home'))
         # Check if the sneaker will be found
@@ -56,3 +56,17 @@ class SneakerHomeViewTest(SneakerTestBase):
             self.assertEqual(len(paginator.get_page(1)), 3)
             self.assertEqual(len(paginator.get_page(2)), 3)
             self.assertEqual(len(paginator.get_page(3)), 2)
+
+    def test_invalid_page_query_uses_page_one(self):
+        # Creating 8 different sneakers for this test
+        for i in range(8):
+            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
+            self.make_sneaker(**kwargs)
+
+        # Making PER_PAGE equals 3 to have 3 pages
+        with patch('sneakers.views.PER_PAGE', new=3):
+            response = self.client.get(reverse('sneakers:home') + '?page=1A')
+            self.assertEqual(response.context['sneakers'].number, 1)
+
+            response = self.client.get(reverse('sneakers:home') + '?page=2')
+            self.assertEqual(response.context['sneakers'].number, 2)
