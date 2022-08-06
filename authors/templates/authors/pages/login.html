@@ -9,6 +9,8 @@
             <p>
                 You are logged in with
                 {{ request.user.username }}.
+                Please,
+                <a href="{% url 'authors:logout' %}">click here to logout.</a>
             </p>
         {% endif %}
     </div>
