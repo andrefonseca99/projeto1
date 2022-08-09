@@ -1,8 +1,10 @@
+import pytest
 from selenium.webdriver.common.by import By
 
 from .base import SneakerBaseFunctionalTest
 
 
+@pytest.mark.functional_test
 class SneakerHomePageFunctionalTest(SneakerBaseFunctionalTest):
 
     def test_sneaker_home_page_without_sneakers_error_message(self):
