@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 import pytest
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 from .base import SneakerBaseFunctionalTest
 
@@ -15,3 +16,29 @@ class SneakerHomePageFunctionalTest(SneakerBaseFunctionalTest):
         body = self.browser.find_element(By.TAG_NAME, 'body')
         self.sleep()
         self.assertIn('No sneakers found', body.text)
+
+    @patch('sneakers.views.PER_PAGE', new=2)
+    def test_sneaker_search_input_can_find_correct_sneakers(self):
+        sneakers = self.make_sneaker_in_batch()
+
+        title_needed = 'This is what I need'
+
+        sneakers[0].title = title_needed
+        sneakers[0].save()
+
+        # Opening the page
+        self.browser.get(self.live_server_url)
+
+        # Look for search input with placeholder = "Search for sneakers..."
+        search_input = self.browser.find_element(
+            By.XPATH,
+            '//input[@placeholder="Search for a sneaker..."]'
+        )
+        # Type search term and press ENTER
+        search_input.send_keys(title_needed)
+        search_input.send_keys(Keys.ENTER)
+
+        self.assertIn(
+            title_needed,
+            self.browser.find_element(By.CLASS_NAME, 'main-content-list').text
+        )

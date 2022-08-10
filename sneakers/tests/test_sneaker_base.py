@@ -63,7 +63,11 @@ class SneakerMixin:
     def make_sneaker_in_batch(self, qtd=10):
         sneakers = []
         for i in range(qtd):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
+            kwargs = {
+                'slug': f'r{i}',
+                'author_data': {'username': f'u{i}'},
+                'title': f'Sneaker Title {i}'
+            }
             sneaker = self.make_sneaker(**kwargs)
             sneakers.append(sneaker)
         return sneakers

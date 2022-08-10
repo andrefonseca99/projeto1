@@ -25,7 +25,7 @@ def make_chrome_browser(*options):
 
 
 if __name__ == '__main__':
-    browser = make_chrome_browser('--headless')
+    browser = make_chrome_browser()
     browser.get('http://www.google.com/')
     sleep(5)
     browser.quit()
