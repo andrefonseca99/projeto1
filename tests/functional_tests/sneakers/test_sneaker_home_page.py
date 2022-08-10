@@ -34,6 +34,7 @@ class SneakerHomePageFunctionalTest(SneakerBaseFunctionalTest):
             By.XPATH,
             '//input[@placeholder="Search for a sneaker..."]'
         )
+
         # Type search term and press ENTER
         search_input.send_keys(title_needed)
         search_input.send_keys(Keys.ENTER)
@@ -41,4 +42,24 @@ class SneakerHomePageFunctionalTest(SneakerBaseFunctionalTest):
         self.assertIn(
             title_needed,
             self.browser.find_element(By.CLASS_NAME, 'main-content-list').text
+        )
+
+    @patch('sneakers.views.PER_PAGE', new=2)
+    def test_sneaker_home_page_pagination(self):
+        self.make_sneaker_in_batch()
+
+        # Opening the page
+        self.browser.get(self.live_server_url)
+
+        # Search for pagination and click on page number 2
+        page2 = self.browser.find_element(
+            By.XPATH,
+            '//a[@aria-label="Go to page 2"]'
+        )
+        page2.click()
+
+        # Look for 2 sneakers on second page
+        self.assertEqual(
+            len(self.browser.find_elements(By.CLASS_NAME, 'sneakers')),
+            2
         )
