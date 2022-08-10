@@ -2,9 +2,7 @@ from django.test import TestCase
 from sneakers.models import Category, Sneaker, User
 
 
-class SneakerTestBase(TestCase):
-    def setUp(self) -> None:
-        return super().setUp()
+class SneakerMixin:
 
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
@@ -61,3 +59,16 @@ class SneakerTestBase(TestCase):
             is_published=is_published,
             cover=cover
         )
+
+    def make_sneaker_in_batch(self, qtd=10):
+        sneakers = []
+        for i in range(qtd):
+            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
+            sneaker = self.make_sneaker(**kwargs)
+            sneakers.append(sneaker)
+        return sneakers
+
+
+class SneakerTestBase(TestCase, SneakerMixin):
+    def setUp(self) -> None:
+        return super().setUp()

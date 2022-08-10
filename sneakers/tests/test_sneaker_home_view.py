@@ -43,9 +43,7 @@ class SneakerHomeViewTest(SneakerTestBase):
 
     def test_sneaker_home_is_paginated(self):
 
-        for i in range(8):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
-            self.make_sneaker(**kwargs)
+        self.make_sneaker_in_batch(qtd=8)
 
         with patch('sneakers.views.PER_PAGE', new=3):
             response = self.client.get(reverse('sneakers:home'))
@@ -59,9 +57,7 @@ class SneakerHomeViewTest(SneakerTestBase):
 
     def test_invalid_page_query_uses_page_one(self):
         # Creating 8 different sneakers for this test
-        for i in range(8):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
-            self.make_sneaker(**kwargs)
+        self.make_sneaker_in_batch(qtd=8)
 
         # Making PER_PAGE equals 3 to have 3 pages
         with patch('sneakers.views.PER_PAGE', new=3):
