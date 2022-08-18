@@ -113,9 +113,22 @@ def dashboard_sneaker_edit(request, id):
         raise Http404()
 
     form = AuthorsSneakerForm(
-        request.POST or None,
+        data=request.POST or None,
+        files=request.FILES or None,
         instance=sneaker
     )
+
+    if form.is_valid():
+        sneaker = form.save(commit=False)
+
+        sneaker.author = request.user
+        sneaker.sneaker_description_is_html = False
+        sneaker.is_published = False
+
+        sneaker.save()
+
+        messages.success(request, 'Your sneaker was successfully saved!')
+        return redirect(reverse('authors:dashboard_sneaker_edit', args=(id,)))
 
     return render(
         request,
