@@ -11,7 +11,7 @@
             <ul>
                {% for sneaker in sneakers %}
                <li>
-                <a href="#">{{ sneaker.title }}</a>
+                <a href="{% url 'authors:dashboard_sneaker_edit' sneaker.id %}">{{ sneaker.title }}</a>
                </li>
                {% empty %}
                 <li>

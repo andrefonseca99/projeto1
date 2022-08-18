@@ -1,0 +1,15 @@
+{% extends 'global/base.html' %}
+
+{% block title %} Dashboard Sneaker | {% endblock title %}
+
+{% block content %}
+    <div class="main-content center container">
+        <h2>Dashboard Sneaker</h2>
+        {% include 'global/partials/messages.html' %}
+        {% include 'authors/partials/login_message.html' %}
+        <div class="authors-dashboard-container">
+            {% include 'global/partials/form.html' %}
+        </div>
+    </div>
+
+{% endblock content %}

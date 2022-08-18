@@ -97,3 +97,19 @@ def dashboard(request):
             'sneakers': sneakers,
         }
     )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_sneaker_edit(request, id):
+    sneaker = Sneaker.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    )
+    if not sneaker:
+        raise Http404()
+
+    return render(
+        request,
+        'authors/pages/dashboard_sneaker.html',
+    )

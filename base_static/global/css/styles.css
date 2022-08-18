@@ -446,9 +446,21 @@ h6 {
 
 .authors-dashboard-container h3,
 .authors-dashboard-container p,
-.authors-dashboard-container ul {
+.authors-dashboard-container ul,
+.authors-dashboard-container a {
     list-style-type: none;
     margin: 1rem 0;
+    text-decoration: none;
+    transition: all 300ms ease-in-out;
+}
+
+.authors-dashboard-container a {
+    color: var(--color-gray-7);
+}
+
+.authors-dashboard-container a:hover {
+    filter: brightness(.5);
+    color: var(--color-gray-9);
 }
 
 /* Generics */
