@@ -12,6 +12,11 @@ urlpatterns = [
      path('logout/', views.logout_view, name='logout'),
      path('dashboard/', views.dashboard, name='dashboard'),
      path(
+          'dashboard/sneaker/new/',
+          views.dashboard_sneaker_new,
+          name='dashboard_sneaker_new'
+     ),
+     path(
           'dashboard/sneaker/<int:id>/edit/',
           views.dashboard_sneaker_edit,
           name='dashboard_sneaker_edit'

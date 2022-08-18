@@ -137,3 +137,36 @@ def dashboard_sneaker_edit(request, id):
             'form': form,
         }
     )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_sneaker_new(request):
+
+    form = AuthorsSneakerForm(
+        data=request.POST or None,
+        files=request.FILES or None,
+    )
+
+    if form.is_valid():
+        sneaker: Sneaker = form.save(commit=False)
+
+        sneaker.author = request.user
+        sneaker.sneaker_description_is_html = False
+        sneaker.is_published = False
+
+        sneaker.save()
+
+        messages.success(request, 'Your sneaker was successfully saved!')
+        return redirect(
+            reverse('authors:dashboard_sneaker_edit', args=(sneaker.id,)),
+            args=(sneaker.id,)
+        )
+
+    return render(
+        request,
+        'authors/pages/dashboard_sneaker.html',
+        context={
+            'form': form,
+            'form_action': reverse('authors:dashboard_sneaker_new')
+        }
+    )

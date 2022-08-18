@@ -2,7 +2,8 @@
 <div class="login-message">
     You are logged in with
     {{ request.user.username }}.
-    <a href="{% url 'authors:dashboard' %}" class="">See all your sneakers</a> or
+    <a href="{% url 'authors:dashboard' %}" class="">See all your sneakers</a>,
+    <a href="{% url 'authors:dashboard_sneaker_new' %}" class="">create a new sneaker</a> or
     <form class="inline-form" action="{% url 'authors:logout' %}" method='POST'>
         {% csrf_token %}
         <input type="hidden" name="username" value="{{ request.user.username }}">
