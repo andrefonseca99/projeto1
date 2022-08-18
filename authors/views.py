@@ -170,3 +170,19 @@ def dashboard_sneaker_new(request):
             'form_action': reverse('authors:dashboard_sneaker_new')
         }
     )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_sneaker_delete(request, id):
+    sneaker = Sneaker.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not sneaker:
+        raise Http404()
+
+    sneaker.delete()
+    messages.success(request, 'Deleted successfully.')
+    return redirect(reverse('authors:dashboard'))

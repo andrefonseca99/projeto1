@@ -5,13 +5,25 @@
 {% block content %}
     <div class="main-content center container">
         <h2>Dashboard ({{ user }})</h2>
+
         {% include 'authors/partials/login_message.html' %}
+        {% include 'global/partials/messages.html' %}
+
         <div class="authors-dashboard-container">
             <h3>Your sneakers</h3>
+
             <ul>
                {% for sneaker in sneakers %}
                <li>
                 <a href="{% url 'authors:dashboard_sneaker_edit' sneaker.id %}">{{ sneaker.title }}</a>
+                <form
+                class="inline-form form-delete"
+                action="{% url 'authors:dashboard_sneaker_delete' sneaker.id %}"
+                method='POST'
+                >
+                    {% csrf_token %}
+                   - <button class="plaintext-button" type="submit"> Delete</button>
+                </form>
                </li>
                {% empty %}
                 <li>
@@ -19,9 +31,8 @@
                 </li>
                {% endfor %} 
             </ul>
+
         </div>
     </div>
-
-    {% include 'global/partials/messages.html' %}
 
 {% endblock content %}
