@@ -6,6 +6,20 @@
     <div class="main-content center container">
         <h2>Dashboard ({{ user }})</h2>
         {% include 'authors/partials/login_message.html' %}
+        <div class="authors-dashboard-container">
+            <h3>Your sneakers</h3>
+            <ul>
+               {% for sneaker in sneakers %}
+               <li>
+                <a href="#">{{ sneaker.title }}</a>
+               </li>
+               {% empty %}
+                <li>
+                    <p>You do not have any sneakers, please create one.</p>
+                </li>
+               {% endfor %} 
+            </ul>
+        </div>
     </div>
 
     {% include 'global/partials/messages.html' %}
