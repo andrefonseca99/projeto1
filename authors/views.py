@@ -173,7 +173,14 @@ def dashboard_sneaker_new(request):
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_sneaker_delete(request, id):
+def dashboard_sneaker_delete(request):
+
+    if not request.POST:
+        raise Http404()
+
+    POST = request.POST
+    id = POST.get('id')
+
     sneaker = Sneaker.objects.filter(
         is_published=False,
         author=request.user,

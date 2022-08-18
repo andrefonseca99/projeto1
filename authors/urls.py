@@ -17,13 +17,13 @@ urlpatterns = [
           name='dashboard_sneaker_new'
      ),
      path(
+          'dashboard/sneaker/delete/',
+          views.dashboard_sneaker_delete,
+          name='dashboard_sneaker_delete'
+     ),
+     path(
           'dashboard/sneaker/<int:id>/edit/',
           views.dashboard_sneaker_edit,
           name='dashboard_sneaker_edit'
-     ),
-     path(
-          'dashboard/sneaker/<int:id>/delete/',
-          views.dashboard_sneaker_delete,
-          name='dashboard_sneaker_delete'
      ),
 ]

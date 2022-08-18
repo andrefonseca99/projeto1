@@ -18,10 +18,11 @@
                 <a href="{% url 'authors:dashboard_sneaker_edit' sneaker.id %}">{{ sneaker.title }}</a>
                 <form
                 class="inline-form form-delete"
-                action="{% url 'authors:dashboard_sneaker_delete' sneaker.id %}"
+                action="{% url 'authors:dashboard_sneaker_delete' %}"
                 method='POST'
                 >
                     {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ sneaker.id }}">
                    - <button class="plaintext-button" type="submit"> Delete</button>
                 </form>
                </li>
