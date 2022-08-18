@@ -6,6 +6,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from sneakers.models import Sneaker
 
+from authors.forms.sneaker_form import AuthorsSneakerForm
+
 from .forms import LoginForm, RegisterForm
 
 
@@ -105,11 +107,20 @@ def dashboard_sneaker_edit(request, id):
         is_published=False,
         author=request.user,
         pk=id,
-    )
+    ).first()
+
     if not sneaker:
         raise Http404()
+
+    form = AuthorsSneakerForm(
+        request.POST or None,
+        instance=sneaker
+    )
 
     return render(
         request,
         'authors/pages/dashboard_sneaker.html',
+        context={
+            'form': form,
+        }
     )
