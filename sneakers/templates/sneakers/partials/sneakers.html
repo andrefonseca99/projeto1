@@ -1,13 +1,13 @@
 <div class="sneakers sneakers-list-item">
     <div class="sneakers-list-cover">
-        <a href="{% url 'sneakers:sneaker' sneaker.id %}">
+        <a href="{{ sneaker.get_absolute_url }}">
         <img src="{{ sneaker.cover.url }}" alt="Temporary image">
         </a>
     </div>
 
     <div class="sneaker-title-container">
         <h2 class="sneaker-title">
-            <a href="{% url 'sneakers:sneaker' sneaker.id %}">
+            <a href="{{ sneaker.get_absolute_url }}">
         {{ sneaker.title }}
             </a>
         </h2>
