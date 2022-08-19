@@ -23,7 +23,7 @@ urlpatterns = [
      ),
      path(
           'dashboard/sneaker/<int:id>/edit/',
-          views.dashboard_sneaker_edit,
+          views.DashboardSneaker.as_view(),
           name='dashboard_sneaker_edit'
      ),
 ]
