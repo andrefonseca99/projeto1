@@ -1,5 +1,4 @@
 from authors.forms import LoginForm, RegisterForm
-from authors.forms.sneaker_form import AuthorsSneakerForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -95,77 +94,6 @@ def dashboard(request):
         'authors/pages/dashboard.html',
         context={
             'sneakers': sneakers,
-        }
-    )
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_sneaker_edit(request, id):
-    sneaker = Sneaker.objects.filter(
-        is_published=False,
-        author=request.user,
-        pk=id,
-    ).first()
-
-    if not sneaker:
-        raise Http404()
-
-    form = AuthorsSneakerForm(
-        data=request.POST or None,
-        files=request.FILES or None,
-        instance=sneaker
-    )
-
-    if form.is_valid():
-        sneaker = form.save(commit=False)
-
-        sneaker.author = request.user
-        sneaker.sneaker_description_is_html = False
-        sneaker.is_published = False
-
-        sneaker.save()
-
-        messages.success(request, 'Your sneaker was successfully saved!')
-        return redirect(reverse('authors:dashboard_sneaker_edit', args=(id,)))
-
-    return render(
-        request,
-        'authors/pages/dashboard_sneaker.html',
-        context={
-            'form': form,
-        }
-    )
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_sneaker_new(request):
-
-    form = AuthorsSneakerForm(
-        data=request.POST or None,
-        files=request.FILES or None,
-    )
-
-    if form.is_valid():
-        sneaker: Sneaker = form.save(commit=False)
-
-        sneaker.author = request.user
-        sneaker.sneaker_description_is_html = False
-        sneaker.is_published = False
-
-        sneaker.save()
-
-        messages.success(request, 'Your sneaker was successfully saved!')
-        return redirect(
-            reverse('authors:dashboard_sneaker_edit', args=(sneaker.id,)),
-            args=(sneaker.id,)
-        )
-
-    return render(
-        request,
-        'authors/pages/dashboard_sneaker.html',
-        context={
-            'form': form,
-            'form_action': reverse('authors:dashboard_sneaker_new')
         }
     )
 

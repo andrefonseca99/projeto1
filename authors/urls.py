@@ -13,7 +13,7 @@ urlpatterns = [
      path('dashboard/', views.dashboard, name='dashboard'),
      path(
           'dashboard/sneaker/new/',
-          views.dashboard_sneaker_new,
+          views.DashboardSneaker.as_view(),
           name='dashboard_sneaker_new'
      ),
      path(

@@ -9,18 +9,18 @@ from sneakers.models import Sneaker
 
 class DashboardSneaker(View):
 
-    def get_sneaker(self, id):
+    def get_sneaker(self, id=None):
         sneaker = None
 
-        if id:
+        if id is not None:
             sneaker = Sneaker.objects.filter(
                 is_published=False,
                 author=self.request.user,
                 pk=id,
             ).first()
 
-        if not sneaker:
-            raise Http404()
+            if not sneaker:
+                raise Http404()
 
         return sneaker
 
@@ -33,12 +33,12 @@ class DashboardSneaker(View):
             }
         )
 
-    def get(self, request, id):
+    def get(self, request, id=None):
         sneaker = self.get_sneaker(id)
         form = AuthorsSneakerForm(instance=sneaker)
         return self.render_sneaker(form)
 
-    def post(self, request, id):
+    def post(self, request, id=None):
         sneaker = self.get_sneaker(id)
 
         form = AuthorsSneakerForm(
@@ -58,7 +58,7 @@ class DashboardSneaker(View):
 
             messages.success(request, 'Your sneaker was successfully saved!')
             return redirect(
-                reverse('authors:dashboard_sneaker_edit', args=(id,))
+                reverse('authors:dashboard_sneaker_edit', args=(sneaker.id,))
             )
 
         return self.render_sneaker(form)
