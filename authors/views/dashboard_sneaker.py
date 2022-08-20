@@ -8,15 +8,38 @@ from sneakers.models import Sneaker
 
 
 class DashboardSneaker(View):
-    def get(self, request, id):
-        sneaker = Sneaker.objects.filter(
-            is_published=False,
-            author=request.user,
-            pk=id,
-        ).first()
+
+    def get_sneaker(self, id):
+        sneaker = None
+
+        if id:
+            sneaker = Sneaker.objects.filter(
+                is_published=False,
+                author=self.request.user,
+                pk=id,
+            ).first()
 
         if not sneaker:
             raise Http404()
+
+        return sneaker
+
+    def render_sneaker(self, form):
+        return render(
+            self.request,
+            'authors/pages/dashboard_sneaker.html',
+            context={
+                'form': form,
+            }
+        )
+
+    def get(self, request, id):
+        sneaker = self.get_sneaker(id)
+        form = AuthorsSneakerForm(instance=sneaker)
+        return self.render_sneaker(form)
+
+    def post(self, request, id):
+        sneaker = self.get_sneaker(id)
 
         form = AuthorsSneakerForm(
             data=request.POST or None,
@@ -38,10 +61,4 @@ class DashboardSneaker(View):
                 reverse('authors:dashboard_sneaker_edit', args=(id,))
             )
 
-        return render(
-            request,
-            'authors/pages/dashboard_sneaker.html',
-            context={
-                'form': form,
-            }
-        )
+        return self.render_sneaker(form)
