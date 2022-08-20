@@ -71,3 +71,19 @@ class DashboardSneaker(View):
             )
 
         return self.render_sneaker(form)
+
+
+@method_decorator(
+    login_required(
+        login_urls='authors:login',
+        redirect_field_name='next'
+    ),
+    name='dispatch'
+)
+class DashboardSneakerDelete(DashboardSneaker):
+
+    def post(self, *args, **kwargs):
+        sneaker = self.get_sneaker(self.request.POST.get('id'))
+        sneaker.delete()
+        messages.success(self.request, 'Deleted successfully.')
+        return redirect(reverse('authors:dashboard'))

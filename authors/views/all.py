@@ -96,26 +96,3 @@ def dashboard(request):
             'sneakers': sneakers,
         }
     )
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_sneaker_delete(request):
-
-    if not request.POST:
-        raise Http404()
-
-    POST = request.POST
-    id = POST.get('id')
-
-    sneaker = Sneaker.objects.filter(
-        is_published=False,
-        author=request.user,
-        pk=id,
-    ).first()
-
-    if not sneaker:
-        raise Http404()
-
-    sneaker.delete()
-    messages.success(request, 'Deleted successfully.')
-    return redirect(reverse('authors:dashboard'))

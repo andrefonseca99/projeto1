@@ -18,7 +18,7 @@ urlpatterns = [
      ),
      path(
           'dashboard/sneaker/delete/',
-          views.dashboard_sneaker_delete,
+          views.DashboardSneakerDelete.as_view(),
           name='dashboard_sneaker_delete'
      ),
      path(
