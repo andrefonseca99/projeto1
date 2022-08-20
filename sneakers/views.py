@@ -3,11 +3,39 @@ import os
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.views.generic import ListView
 from utils.pagination import make_pagination
 
 from sneakers.models import Sneaker
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 12))
+
+
+class SneakerListViewBase(ListView):
+    model = Sneaker
+    context_object_name = 'sneakers'
+    paginate_by = None
+    ordering = ['-id']
+    template_name = 'sneakers/pages/home.html'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(
+            is_published=True,
+        )
+        return qs
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        page_obj, pagination_range = make_pagination(
+            self.request,
+            ctx.get('sneakers'),
+            PER_PAGE
+        )
+        ctx.update(
+            {'sneakers': page_obj, 'pagination_range': pagination_range}
+        )
+        return ctx
 
 
 def home(request):
