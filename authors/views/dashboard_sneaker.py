@@ -11,7 +11,7 @@ from sneakers.models import Sneaker
 
 @method_decorator(
     login_required(
-        login_urls='authors:login',
+        login_url='authors:login',
         redirect_field_name='next'
     ),
     name='dispatch'
@@ -75,7 +75,7 @@ class DashboardSneaker(View):
 
 @method_decorator(
     login_required(
-        login_urls='authors:login',
+        login_url='authors:login',
         redirect_field_name='next'
     ),
     name='dispatch'
