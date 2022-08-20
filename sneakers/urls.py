@@ -6,7 +6,7 @@ from . import views
 app_name = 'sneakers'
 
 urlpatterns = [
-    path('', views.SneakerListViewBase.as_view(), name="home"),
+    path('', views.SneakerListViewHome.as_view(), name="home"),
     path('sneakers/search/', views.search, name="search"),
     path('sneakers/category/<int:category_id>/', views.category, name="category"),  # noqa: E501
     path('sneakers/<int:id>/', views.sneaker, name="sneaker"),

@@ -38,6 +38,10 @@ class SneakerListViewBase(ListView):
         return ctx
 
 
+class SneakerListViewHome(SneakerListViewBase):
+    template_name = 'sneakers/pages/home.html'
+
+
 def home(request):
     sneakers = Sneaker.objects.filter(
         is_published=True,
