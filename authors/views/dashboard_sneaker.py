@@ -1,12 +1,21 @@
 from authors.forms.sneaker_form import AuthorsSneakerForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
 from sneakers.models import Sneaker
 
 
+@method_decorator(
+    login_required(
+        login_urls='authors:login',
+        redirect_field_name='next'
+    ),
+    name='dispatch'
+)
 class DashboardSneaker(View):
 
     def get_sneaker(self, id=None):
