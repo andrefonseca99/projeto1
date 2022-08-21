@@ -8,7 +8,7 @@ class SneakerSearchViewTest(SneakerTestBase):
 
     def test_sneaker_search_view_function_is_correct(self):
         view = resolve(reverse('sneakers:search'))
-        self.assertIs(view.func, views.search)
+        self.assertIs(view.func.view_class, views.SneakerListViewSearch)
 
     def test_sneaker_search_loads_correct_template(self):
         response = self.client.get(reverse('sneakers:search') + '?q=teste')

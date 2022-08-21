@@ -10,7 +10,7 @@ class SneakerHomeViewTest(SneakerTestBase):
 
     def test_sneaker_home_view_function_is_correct(self):
         view = resolve(reverse('sneakers:home'))
-        self.assertIs(view.func, views.home)
+        self.assertIs(view.func.view_class, views.SneakerListViewHome)
 
     def test_sneaker_home_view_return_status_code_200_OK(self):
         response = self.client.get(reverse('sneakers:home'))

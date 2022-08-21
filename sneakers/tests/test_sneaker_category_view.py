@@ -8,7 +8,7 @@ class SneakerCategoryViewTest(SneakerTestBase):
 
     def test_sneaker_category_view_function_is_correct(self):
         view = resolve(reverse('sneakers:category', kwargs={'category_id': 1000}))  # noqa: E501
-        self.assertIs(view.func, views.category)
+        self.assertIs(view.func.view_class, views.SneakerListViewCategory)
 
     def test_sneaker_category_view_return_404_if_no_sneakers_found(self):
         response = self.client.get(reverse('sneakers:category', kwargs={'category_id': 1000}))  # noqa: E501
