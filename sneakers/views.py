@@ -2,8 +2,7 @@ import os
 
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
 
 from sneakers.models import Sneaker
@@ -92,10 +91,14 @@ class SneakerListViewSearch(SneakerListViewBase):
         return ctx
 
 
-def sneaker(request, id):
-    sneaker = get_object_or_404(Sneaker, pk=id, is_published=True,)
+class SneakerDetailView(DetailView):
+    model = Sneaker
+    context_object_name = 'sneaker'
+    template_name = 'sneakers/pages/sneaker-view.html'
 
-    return render(request, 'sneakers/pages/sneaker-view.html', context={
-        'sneaker': sneaker,
-        'is_detail_page': True,
-    })
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx.update({
+            'is_detail_page': True,
+        })
+        return ctx
