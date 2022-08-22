@@ -365,7 +365,7 @@ a {
 
 .form-content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     gap: calc(var(--spacing-gutter-medium) / 2 ) var(--spacing-gutter-medium);
 }
 
