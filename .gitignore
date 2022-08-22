@@ -129,6 +129,3 @@ db.sqlite3
 db copy.sqlite3
 static/
 deploy/
-
-# Adicionar db novamente
-!db.sqlite3
