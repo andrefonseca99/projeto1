@@ -491,4 +491,7 @@ a {
     .form-content-grid {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
+    .span-2 {
+        grid-column: span 1;
+    }
 }
