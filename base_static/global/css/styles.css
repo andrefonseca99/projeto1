@@ -376,6 +376,10 @@ a {
     color: var(--color-white);
 }
 
+.span-2 {
+    grid-column: span 2;
+}
+
 .inline-form{
     display: inline;
 }
@@ -488,9 +492,6 @@ a {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
     .span-2 {
-        grid-column: span 2;
-    }
-    .main-header-container {
-        background: red;
+        grid-column: span 1;
     }
 }
