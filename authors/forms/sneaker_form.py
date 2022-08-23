@@ -3,8 +3,7 @@ from collections import defaultdict
 from django import forms
 from django.core.exceptions import ValidationError
 from sneakers.models import Sneaker
-
-#  from utils.django_forms import add_attr
+from utils.django_forms import add_attr
 
 
 class AuthorsSneakerForm(forms.ModelForm):
@@ -13,8 +12,8 @@ class AuthorsSneakerForm(forms.ModelForm):
 
         self._my_errors = defaultdict(list)
 
-#        add_attr(self.fields.get('sneaker_description'), 'class', 'span-2')
-#        add_attr(self.fields.get('cover'), 'class', 'span-2')
+        add_attr(self.fields.get('sneaker_description'), 'class', 'span-2')
+        add_attr(self.fields.get('cover'), 'class', 'span-2')
 
     class Meta:
         model = Sneaker
