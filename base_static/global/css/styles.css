@@ -380,10 +380,6 @@ a {
     display: inline;
 }
 
-.span-2 {
-    grid-column: span 2;
-}
-
 .plaintext-button {
     display: inline;
     border: none;
@@ -491,7 +487,10 @@ a {
     .form-content-grid {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
+}
+
+@media (min-width: 600px) {
     .span-2 {
-        grid-column: span 1;
+        grid-column: span 2;
     }
 }
