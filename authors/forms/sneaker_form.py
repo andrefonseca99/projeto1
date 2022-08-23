@@ -3,7 +3,8 @@ from collections import defaultdict
 from django import forms
 from django.core.exceptions import ValidationError
 from sneakers.models import Sneaker
-from utils.django_forms import add_attr
+
+#  from utils.django_forms import add_attr
 
 
 class AuthorsSneakerForm(forms.ModelForm):
@@ -20,11 +21,6 @@ class AuthorsSneakerForm(forms.ModelForm):
         fields = 'title', 'description', 'condition_value', 'price', \
             'sneaker_description', 'cover'
         widgets = {
-            'cover': forms.FileInput(
-                attrs={
-                    'class': 'span-2'
-                }
-            ),
             'condition_value': forms.Select(
                 choices=(
                     ('10', '10/10'),
@@ -38,7 +34,7 @@ class AuthorsSneakerForm(forms.ModelForm):
                     ('2', '2/10'),
                     ('1', '1/10'),
                 )
-            )
+            ),
         }
 
     def clean(self, *args, **kwargs):
