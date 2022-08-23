@@ -377,7 +377,7 @@ a {
 }
 
 .span-2 {
-    grid-column: span 2;
+    grid-column: span 1;
 }
 
 .inline-form{
@@ -490,5 +490,8 @@ a {
     .main-content-list,
     .form-content-grid {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    }
+    .span-2 {
+        grid-column: span 2;
     }
 }

@@ -22,7 +22,7 @@ class AuthorsSneakerForm(forms.ModelForm):
         widgets = {
             'cover': forms.FileInput(
                 attrs={
-#                    'class': 'span-2'
+                    'class': 'span-2'
                 }
             ),
             'condition_value': forms.Select(
