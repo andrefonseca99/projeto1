@@ -12,8 +12,8 @@ class AuthorsSneakerForm(forms.ModelForm):
 
         self._my_errors = defaultdict(list)
 
-        add_attr(self.fields.get('sneaker_description'), 'class', 'span-2')
-        add_attr(self.fields.get('cover'), 'class', 'span-2')
+#        add_attr(self.fields.get('sneaker_description'), 'class', 'span-2')
+#        add_attr(self.fields.get('cover'), 'class', 'span-2')
 
     class Meta:
         model = Sneaker
@@ -22,7 +22,7 @@ class AuthorsSneakerForm(forms.ModelForm):
         widgets = {
             'cover': forms.FileInput(
                 attrs={
-                    'class': 'span-2'
+#                    'class': 'span-2'
                 }
             ),
             'condition_value': forms.Select(
