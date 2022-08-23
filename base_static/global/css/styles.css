@@ -490,7 +490,7 @@ a {
 }
 
 @media (max-width: 600px) {
-    .span-2 {
+    .teste {
         grid-column: span 2;
     }
 }
