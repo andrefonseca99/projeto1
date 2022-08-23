@@ -376,10 +376,6 @@ a {
     color: var(--color-white);
 }
 
-.span-2 {
-    grid-column: span 1;
-}
-
 .inline-form{
     display: inline;
 }
@@ -486,7 +482,7 @@ a {
     margin: var(--spacing-gutter-medium) 0;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 600px) {
     .main-content-list,
     .form-content-grid {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
