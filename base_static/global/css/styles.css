@@ -489,7 +489,7 @@ a {
     }
 }
 
-@media (min-width: 600px) {
+@media (max-width: 600px) {
     .span-2 {
         grid-column: span 2;
     }
