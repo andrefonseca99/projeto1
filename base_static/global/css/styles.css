@@ -482,12 +482,15 @@ a {
     margin: var(--spacing-gutter-medium) 0;
 }
 
-@media screen and (min-width: 600px) {
+@media (max-width: 600px) {
     .main-content-list,
     .form-content-grid {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
     .span-2 {
         grid-column: span 2;
+    }
+    .main-header-container {
+        background: red;
     }
 }
