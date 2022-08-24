@@ -1,7 +1,7 @@
 import os
 
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
 
@@ -39,6 +39,19 @@ class SneakerListViewBase(ListView):
 
 class SneakerListViewHome(SneakerListViewBase):
     template_name = 'sneakers/pages/home.html'
+
+
+class SneakerListViewHomeApi(SneakerListViewBase):
+    template_name = 'sneakers/pages/home.html'
+
+    def render_to_response(self, context, **response_kwargs):
+        sneakers = self.get_context_data()['sneakers']
+        sneakers_list = sneakers.object_list.values()
+
+        return JsonResponse(
+            list(sneakers_list),
+            safe=False
+        )
 
 
 class SneakerListViewCategory(SneakerListViewBase):

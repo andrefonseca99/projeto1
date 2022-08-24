@@ -10,4 +10,5 @@ urlpatterns = [
     path('sneakers/search/', views.SneakerListViewSearch.as_view(), name="search"),  # noqa: E501
     path('sneakers/category/<int:category_id>/', views.SneakerListViewCategory.as_view(), name="category"),  # noqa: E501
     path('sneakers/<int:pk>/', views.SneakerDetailView.as_view(), name="sneaker"),  # noqa: E501
+    path('sneakers/api/v1/', views.SneakerListViewHomeApi.as_view(), name="sneaker_api_v1"),  # noqa: E501
 ]
