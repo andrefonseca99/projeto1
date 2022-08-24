@@ -1,6 +1,7 @@
 import os
 
 from django.db.models import Q
+from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
 from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
@@ -41,7 +42,7 @@ class SneakerListViewHome(SneakerListViewBase):
     template_name = 'sneakers/pages/home.html'
 
 
-class SneakerListViewHomeApi(SneakerListViewBase):
+class SneakerListViewHomeAPI(SneakerListViewBase):
     template_name = 'sneakers/pages/home.html'
 
     def render_to_response(self, context, **response_kwargs):
@@ -120,3 +121,24 @@ class SneakerDetailView(DetailView):
         qs = super().get_queryset(*args, **kwargs)
         qs = qs.filter(is_published=True)
         return qs
+
+
+class SneakerDetailAPI(SneakerDetailView):
+    def render_to_response(self, context, **response_kwargs):
+        sneaker = self.get_context_data()['sneaker']
+        sneaker_dict = model_to_dict(sneaker)
+
+        sneaker_dict['created_at'] = str(sneaker.created_at)
+
+        if sneaker_dict.get('cover'):
+            sneaker_dict['cover'] = self.request.build_absolute_uri() + \
+                 sneaker_dict['cover'].url[1:]
+        else:
+            sneaker_dict['cover'] = ''
+
+        del sneaker_dict['is_published']
+
+        return JsonResponse(
+            sneaker_dict,
+            safe=False,
+        )
