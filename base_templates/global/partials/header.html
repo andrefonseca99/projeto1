@@ -1,5 +1,5 @@
 <header class="main-header-container">
-    <div class="main-header container">
+    <div class="main-header container ali-left">
         <h1>
             <a class="main-logo" href="{% url 'sneakers:home' %}">
                 <i class="fas fa-heart main-logo-icon"></i>
@@ -7,4 +7,26 @@
             </a>
         </h1>
     </div>
+    <nav class="nav">
+        <button
+        class="btn-menu" 
+        aria-label="Open Menu" 
+        aria-haspopup="true" 
+        aria-controls="menu" 
+        aria-expanded="false"
+        >
+            Menu<span class="hamburger"></span>
+        </button>
+        <ul class="menu" id="menu" role="menu">
+            <li><a href="/">Home</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/authors/dashboard/">Dashboard</a></li>
+                <li><a href="/authors/dashboard/sneaker/new/">Create Sneaker</a></li>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <li><a href="/authors/login/">Login</a></li>
+                <li><a href="/authors/register/">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 </header>
