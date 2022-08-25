@@ -149,3 +149,5 @@ MESSAGE_TAGS = {
     constants.SUCCESS: 'message-success',
     constants.WARNING: 'message-warning',
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://sneakers.andrepf.com/*']
