@@ -3,12 +3,36 @@ import os
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
+from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
 
 from sneakers.models import Sneaker
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 12))
+
+
+def theory(request, *args, **kwargs):
+    sneakers = Sneaker.objects.filter(
+        Q(
+            Q(
+                title__icontains='sa',
+                is_published=True,) |
+            Q(
+                id__gt=980
+            )
+        )
+    )
+
+    context = {
+        'sneakers': sneakers
+    }
+
+    return render(
+        request,
+        'sneakers/pages/theory.html',
+        context=context
+    )
 
 
 class SneakerListViewBase(ListView):
