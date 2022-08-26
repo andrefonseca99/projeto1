@@ -383,6 +383,7 @@ a {
     border: none;
     background: var(--color-primary-dark);
     color: var(--color-white);
+    cursor: pointer;
 }
 
 .span-2 {
