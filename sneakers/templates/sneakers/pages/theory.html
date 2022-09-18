@@ -10,7 +10,7 @@
     <h1>Theory</h1>
     <ul>
         {% for sneaker in sneakers %}
-        <li>{{ sneaker.id }} {{ sneaker.author }} {{ sneaker.title }}</li>
+        <li>{{ sneaker }}</li>
         {% empty %}
         <p>No sneakers found</p>
         {% endfor %}

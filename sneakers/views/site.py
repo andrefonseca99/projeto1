@@ -13,16 +13,7 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 12))
 
 
 def theory(request, *args, **kwargs):
-    sneakers = Sneaker.objects.filter(
-        Q(
-            Q(
-                title__icontains='sa',
-                is_published=True,) |
-            Q(
-                id__gt=980
-            )
-        )
-    )
+    sneakers = Sneaker.objects.only('id', 'title')
 
     context = {
         'sneakers': sneakers

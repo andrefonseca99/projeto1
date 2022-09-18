@@ -45,7 +45,7 @@ class SneakerHomeViewTest(SneakerTestBase):
 
         self.make_sneaker_in_batch(qtd=8)
 
-        with patch('sneakers.views.PER_PAGE', new=3):
+        with patch('sneakers.views.site.PER_PAGE', new=3):
             response = self.client.get(reverse('sneakers:home'))
             sneakers = response.context['sneakers']
             paginator = sneakers.paginator
@@ -60,7 +60,7 @@ class SneakerHomeViewTest(SneakerTestBase):
         self.make_sneaker_in_batch(qtd=8)
 
         # Making PER_PAGE equals 3 to have 3 pages
-        with patch('sneakers.views.PER_PAGE', new=3):
+        with patch('sneakers.views.site.PER_PAGE', new=3):
             response = self.client.get(reverse('sneakers:home') + '?page=1A')
             self.assertEqual(response.context['sneakers'].number, 1)
 

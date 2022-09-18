@@ -12,7 +12,12 @@ class Category(models.Model):
         return self.name
 
 
+class SneakerManager(models.Manager):
+    ...
+
+
 class Sneaker(models.Model):
+    objects = SneakerManager()
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=165)
     slug = models.SlugField(unique=True)

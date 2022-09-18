@@ -44,7 +44,7 @@ class SneakerHomePageFunctionalTest(SneakerBaseFunctionalTest):
             self.browser.find_element(By.CLASS_NAME, 'main-content-list').text
         )
 
-    @patch('sneakers.views.PER_PAGE', new=2)
+    @patch('sneakers.views.site.PER_PAGE', new=2)
     def test_sneaker_home_page_pagination(self):
         self.make_sneaker_in_batch()
 
