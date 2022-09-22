@@ -5,9 +5,8 @@ from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
-from utils.pagination import make_pagination
-
 from sneakers.models import Sneaker
+from utils.pagination import make_pagination
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 12))
 
@@ -38,7 +37,7 @@ class SneakerListViewBase(ListView):
         qs = qs.filter(
             is_published=True,
         )
-        qs = qs.select_related('author', 'category')
+        qs = qs.select_related('author', 'category', 'author__profile')
         return qs
 
     def get_context_data(self, *args, **kwargs):

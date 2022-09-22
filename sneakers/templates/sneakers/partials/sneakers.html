@@ -16,12 +16,22 @@
     <div class="sneaker-author">
         {% if sneaker.author is not None %}
             <span class="sneaker-author-item">
+
+                {% if sneaker.author.profile %}
+                    <a href="{% url 'authors:profile' sneaker.author.profile.id%}">
+                {% endif %}
+
                 <i class="fas fa-user"></i>
+
                 {% if sneaker.author.first_name %}
                     {{ sneaker.author.first_name }} {{ sneaker.author.last_name }}
                 {% else %}
                     {{ sneaker.author.username }}
-                {% endif %}            
+                {% endif %}         
+                
+                {% if sneaker.author.profile %}
+                    </a>
+                {% endif %}
             </span>
         {% endif %}
 
