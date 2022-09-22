@@ -26,4 +26,9 @@ urlpatterns = [
           views.DashboardSneaker.as_view(),
           name='dashboard_sneaker_edit'
      ),
+     path(
+          'profile/<int:id>/',
+          views.ProfileView.as_view(),
+          name='profile'
+     ),
 ]
