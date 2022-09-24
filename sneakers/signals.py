@@ -16,6 +16,7 @@ def delete_cover(instance):
 @receiver(pre_delete, sender=Sneaker)
 def sneaker_cover_delete(sender, instance, *args, **kwargs):
     old_instance = Sneaker.objects.filter(pk=instance.pk).first()
+
     if old_instance:
         delete_cover(old_instance)
 
@@ -27,7 +28,7 @@ def sneaker_cover_update(sender, instance, *args, **kwargs):
     if not old_instance:
         return
 
-    is_new_cover = old_instance != instance.cover
+    is_new_cover = old_instance.cover != instance.cover
 
     if is_new_cover:
         delete_cover(old_instance)
