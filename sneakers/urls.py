@@ -14,4 +14,5 @@ urlpatterns = [
     path('sneakers/api/v1/<int:pk>/', views.SneakerDetailAPI.as_view(), name="sneaker_api_v1_detail"),  # noqa: E501
     path('sneakers/theory/', views.theory, name="theory"),
     path('sneakers/api/v2/', views.sneaker_api_list, name="sneaker_api_v2"),
+    path('sneakers/api/v2/<int:pk>/', views.sneaker_api_detail, name="sneaker_api_v2_detail"),  # noqa: E501
 ]
