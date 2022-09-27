@@ -15,15 +15,18 @@ def sneaker_api_list(request):
         serializer = SneakerSerializer(
             instance=sneakers,
             many=True,
-            context={'request': 'request'},
+            context={'request': request},
         )
         return Response(serializer.data)
     elif request.method == 'POST':
-        serializer = SneakerSerializer(data=request.data)
+        serializer = SneakerSerializer(
+            data=request.data,
+            context={'request': request},
+        )
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(
-            serializer.validated_data,
+            serializer.data,
             status=status.HTTP_201_CREATED
         )
 
@@ -37,7 +40,7 @@ def sneaker_api_detail(request, pk):
     serializer = SneakerSerializer(
         instance=sneaker,
         many=False,
-        context={'request': 'request'},
+        context={'request': request},
     )
     return Response(serializer.data)
 
@@ -51,6 +54,6 @@ def profile_api_detail(request, pk):
     serializer = ProfileSerializer(
         instance=profile,
         many=False,
-        context={'request': 'request'},
+        context={'request': request},
     )
     return Response(serializer.data)
