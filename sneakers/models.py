@@ -28,7 +28,9 @@ class SneakerManager(models.Manager):
                 F('author__last_name'), Value(' ('),
                 F('author__username'), Value(')'),
             )
-        ).order_by('-id')
+        ) \
+            .order_by('-id') \
+            .select_related('category', 'author')
 
 
 class Sneaker(models.Model):
