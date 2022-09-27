@@ -1,17 +1,26 @@
-from django.contrib.auth.models import User
+from authors.models import Profile
 from rest_framework import serializers
 
+from .models import Sneaker
 
-class SneakerSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField(max_length=65)
-    description = serializers.CharField(max_length=165)
-    public = serializers.BooleanField(source='is_published')
-    condition = serializers.SerializerMethodField()
-    category = serializers.StringRelatedField()
-    author = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(),
-    )
+
+class SneakerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sneaker
+        fields = [
+            'author', 'id', 'title', 'description',
+            'category', 'public', 'condition'
+        ]
+
+    public = serializers.BooleanField(source='is_published', read_only=True)
+    condition = serializers.SerializerMethodField(read_only=True)
+    category = serializers.StringRelatedField(read_only=True)
 
     def get_condition(self, sneaker):
         return f'{sneaker.condition_value} {sneaker.condition_unit}'
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['author', 'bio', 'contact']
