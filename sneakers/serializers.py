@@ -22,6 +22,15 @@ class SneakerSerializer(serializers.ModelSerializer):
         return f'{sneaker.condition_value}{sneaker.condition_unit}'
 
     def validate(self, attrs):
+        if self.instance is not None and attrs.get('price') is None:
+            attrs['price'] = self.instance.price
+
+        if self.instance is not None and attrs.get('sneaker_description') is None:  # noqa: E501
+            attrs['sneaker_description'] = self.instance.sneaker_description
+
+        if self.instance is not None and attrs.get('title') is None:
+            attrs['title'] = self.instance.title
+
         super_validate = super().validate(attrs)
         AuthorsSneakerValidator(
             data=attrs,

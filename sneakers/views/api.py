@@ -31,18 +31,38 @@ def sneaker_api_list(request):
         )
 
 
-@api_view()
+@api_view(http_method_names=['get', 'patch', 'delete'])
 def sneaker_api_detail(request, pk):
     sneaker = get_object_or_404(
         Sneaker.objects.get_published(),
         pk=pk
     )
-    serializer = SneakerSerializer(
-        instance=sneaker,
-        many=False,
-        context={'request': request},
-    )
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = SneakerSerializer(
+            instance=sneaker,
+            many=False,
+            context={'request': request},
+        )
+        return Response(serializer.data)
+
+    elif request.method == 'PATCH':
+        serializer = SneakerSerializer(
+            instance=sneaker,
+            data=request.data,
+            many=False,
+            context={'request': request},
+            partial=True,
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(
+            serializer.data
+        )
+
+    elif request.method == 'DELETE':
+        sneaker.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view()
