@@ -9,3 +9,5 @@ from .messages import *
 from .middleware import *
 from .security import *
 from .templates import *
+
+from .rest_framework import * # isort: skip
